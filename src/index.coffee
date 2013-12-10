@@ -1,14 +1,17 @@
 zmq = require "zmq"
 child = require "child_process"
+shell = require "shelljs"
+
+process.on "uncaughtException", (err) =>
+  console.log err.stack.toString()
 
 exports.createEngine = =>
-  child.spawn("julia", ["backend.jl"])
+  #child.spawn("julia", ["backend.jl"])
+  console.log "julia #{__dirname}/backend.jl"
+  shell.exec "julia #{__dirname}/backend.jl", {async: true}
   sock = zmq.socket "req"
   sock.connect "tcp://127.0.0.1:2000"
-  sock.on "message", (msg) =>
-    engine.text msg.toString() 
-    next()
-
+  
   engine = require('sense-engine')()
 
   engine.complete = (substr, cb) => 
@@ -20,11 +23,14 @@ exports.createEngine = =>
   engine.execute = (code, next) =>
     engine.code(code, 'text/julia')
     sock.send(code)
+    sock.once "message", (msg) =>
+      engine.text msg.toString() 
+      next()
 
   engine.chunk = (code, cb) =>
     cb(code.split('\n'))
-
-  engine.ready()
+  
+  setTimeout (=> engine.ready()), 2000 
   return engine
 
 
