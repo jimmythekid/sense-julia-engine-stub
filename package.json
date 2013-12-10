@@ -1,0 +1,15 @@
+{
+  "name": "sense-julia-engine",
+  "description": "Simple Julia engine for Sense.",
+  "version": "0.1.0",
+  "main": "index.coffee",
+  "license": "MIT",
+  "dependencies": {
+    "sense-engine": "~0.3.0",
+    "zmq": "~2.5.0"
+  },
+  "sense": {
+    "name": "Julia",
+    "mode": "text/julia"
+  }
+}
