@@ -21,7 +21,7 @@ exports.createEngine = =>
      console.log("Interrupt received")
 
   engine.execute = (code, next) =>
-    engine.code(code, 'text/julia')
+    engine.code(code, 'julia')
     sock.send(code)
     sock.once "message", (msg) =>
       engine.text msg.toString() 
