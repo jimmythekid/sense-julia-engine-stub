@@ -1,6 +1,8 @@
 using ZMQ
 using JSON
 
+cd("/home/sense")
+
 const ctx = Context()
 const io = Socket(ctx, REP)
 ZMQ.bind(io, "tcp://127.0.0.1:2000")
