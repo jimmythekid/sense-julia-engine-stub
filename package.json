@@ -13,6 +13,6 @@
     "mode": "julia"
   },
   "scripts": {
-    "preinstall": "coffee -o lib -c src;cp src/backend.jl lib"
+    "postinstall": "coffee -o lib -c src;cp src/backend.jl lib"
   }
 }
